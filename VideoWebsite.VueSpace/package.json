@@ -13,7 +13,8 @@
     "jsonp": "^0.2.1",
     "vue": "^2.6.10",
     "vue-jsonp": "^2.0.0",
-    "vue-router": "^3.5.2"
+    "vue-router": "^3.5.2",
+    "vue-video-player": "^5.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
