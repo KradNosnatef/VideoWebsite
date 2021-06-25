@@ -2,6 +2,10 @@ package com.fuqianshan.VideoWebsite.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,10 +14,18 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fuqianshan.VideoWebsite.Entity.VideoEntity;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,4 +65,23 @@ public class VideoServiceController {
 
         return(videoService.upload(file));
     }
+
+    @RequestMapping(value = "/Xapi/media", method = RequestMethod.GET)  
+    public ResponseEntity<InputStreamResource> downloadFile()  
+            throws IOException {  
+        String filePath = "E:/test/1/6.mp4";  
+        FileSystemResource file = new FileSystemResource(filePath);  
+        HttpHeaders headers = new HttpHeaders();  
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");  
+        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getFilename()));  
+        headers.add("Pragma", "no-cache");  
+        headers.add("Expires", "0");  
+  
+        return ResponseEntity  
+                .ok()  
+                .headers(headers)  
+                .contentLength(file.contentLength())  
+                .contentType(MediaType.parseMediaType("application/octet-stream"))  
+                .body(new InputStreamResource(file.getInputStream()));  
+    }  
 }
