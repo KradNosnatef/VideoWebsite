@@ -23,7 +23,10 @@
 			getItemClicked(val){
 				//console.log("yes you get clicked!");
 				console.log(val);
-				this.$emit("setRouterPointer","/AuditTools")
+				this.$emit("setRouterPointerWithParam",{
+					dest:"/AuditTools",
+					value:val
+				});
 			}
 		},
 		mounted: function() {
