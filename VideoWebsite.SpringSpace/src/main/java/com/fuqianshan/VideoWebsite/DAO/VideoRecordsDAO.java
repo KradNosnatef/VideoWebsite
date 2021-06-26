@@ -46,6 +46,13 @@ public class VideoRecordsDAO {
         return (list);
     }
 
+    public List<Map<String,Object>> queryByVid(String vid) {//这是一个准特权操作，这个vid传参入口不允许直接暴露给前端，必须由中间服务生成
+        String sql = "select video_records.*,users.username from video_records,users where video_records.uid=users.uid and video_records.vid=?";
+        List<Map<String, Object>> list;
+        list = jdbcTemplate.queryForList(sql,vid);
+        return (list);
+    }
+
     //自定义功能区
     public String insertByUID(String uid,String filename){//返回值是vid
         KeyHolder keyHolder=new GeneratedKeyHolder();
