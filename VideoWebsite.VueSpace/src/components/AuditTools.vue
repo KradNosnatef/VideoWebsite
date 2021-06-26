@@ -2,7 +2,8 @@
 	<div>
 		<p>审核工具页面</p>
 		<a :href="'/Xapi/media?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
-		<button></button>
+		<br />
+		<button>审核通过</button>
 	</div>
 </template>
 
