@@ -72,7 +72,7 @@ public class VideoServiceController {
     @RequestMapping(value = "/Xapi/changeEnabled")
     public @ResponseBody JSONPObject IOchangeEnabled(@RequestParam(value = "enabled") String enabled,
             @RequestParam(value = "vid") String vid, HttpServletResponse httpServletResponse) {
-        if ((!videoService.accessabilityCheck(vid, userService, "enable"))&&(enabled=="1"))
+        if ((!videoService.accessabilityCheck(vid, userService, "write")))
             return (null);
         videoService.SetEnabledByVID(vid, enabled);
         return (IOToolKits.myResponseGenerator(httpServletResponse, true, "_IOchangeEnabled"));
