@@ -1,5 +1,6 @@
 <template>
 	<div class="maindiv">
+		<p>待审核视频清单</p>
 		<ItemCard v-for="post in itemCards" v-bind:inputTitle="post.filename" v-bind:inputUsername="post.username"
 			v-bind:inputUid="post.uid" v-bind:inputVid="post.vid" v-bind:inputEnabled="0"
 			v-on:onItemClicked="getItemClicked">

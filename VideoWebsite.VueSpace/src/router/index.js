@@ -6,6 +6,7 @@ import Admin from '../components/Admin.vue'
 import VideoUpload from '../components/VideoUpload.vue'
 import Audit from '../components/Audit.vue'
 import AuditTools from '../components/AuditTools.vue'
+import VideoInfo from '../components/VideoInfo.vue'
 
 import Register from '../components/subComponents/Register.vue'
 
@@ -50,6 +51,11 @@ const router = new Router({
 			path:'/AuditTools',
 			name:'AuditTools',
 			component:AuditTools
+		},
+		{
+			path:'/VideoInfo',
+			name:'VideoInfo',
+			component:VideoInfo
 		}
 	]
 })

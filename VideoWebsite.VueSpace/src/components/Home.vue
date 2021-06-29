@@ -1,7 +1,8 @@
 <template>
 	<div class="maindiv">
 		<ItemCard v-for="post in itemCards" v-bind:inputTitle="post.filename" v-bind:inputUsername="post.username"
-			v-bind:inputUid="post.uid" v-bind:inputVid="post.vid" v-bind:inputEnabled=1>
+			v-bind:inputUid="post.uid" v-bind:inputVid="post.vid" v-bind:inputEnabled=1
+			v-on:onItemClicked="getItemClicked">
 		</ItemCard>
 	</div>
 </template>
@@ -13,6 +14,16 @@
 		data() {
 			return {
 				itemCards: null
+			}
+		},
+		methods: {
+			getItemClicked(val) {
+				//console.log("yes you get clicked!");
+				console.log(val);
+				this.$emit("setRouterPointerWithParam", {
+					dest: "/VideoInfo",
+					value: val
+				});
 			}
 		},
 		components: {
