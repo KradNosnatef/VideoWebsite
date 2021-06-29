@@ -2,7 +2,8 @@
 	<div>
 		<p>视频标题：{{inputHorizontalProp.title}}</p>
 		<p>发布人：{{inputHorizontalProp.username}}</p>
-		<a :href="'/Xapi/download?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
+		<a :href="'/Xapi/media?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
+		<button v-on:click="unableVideo">删除视频（可在个人页面恢复）</button>
 		<br />
 		<br />
 		<br />
@@ -31,6 +32,26 @@
 			"inputHorizontalProp"
 		],
 		methods: {
+			unableVideo() {
+				var url = this.$URLGenerator("/Xapi/changeEnabled", {
+					enabled: 0,
+					vid: this.inputHorizontalProp.vid
+				})
+				jsonp(url, {
+					param: "callback",
+					timeout: 3000,
+					prefix: "callback",
+					name: "callback_IOchangeEnabled"
+				}, (err, data) => {
+					if (err) {
+						alert(未知错误);
+					} else {
+						console.log(data);
+					}
+				})
+				alert("已删除");
+				this.$emit("setRouterPointer", "/Admin");
+			},
 			somebodyDeleteItself(){
 				this.refresh();
 			},
