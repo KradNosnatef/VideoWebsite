@@ -3,7 +3,7 @@
 		<p>视频标题：{{inputHorizontalProp.title}}</p>
 		<p>发布人：{{inputHorizontalProp.username}}</p>
 		<a :href="'/Xapi/media?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
-		<button v-on:click="unableVideo">删除视频（可在个人页面恢复）</button>
+		<button v-on:click="unableVideo">删除视频（可在个人页面查看）</button>
 		<br />
 		<br />
 		<br />
@@ -39,20 +39,20 @@
 				})
 				jsonp(url, {
 					param: "callback",
-					timeout: 3000,
+					timeout: 1000,
 					prefix: "callback",
 					name: "callback_IOchangeEnabled"
 				}, (err, data) => {
 					if (err) {
-						alert(未知错误);
+						alert("删除视频出错！存在网络问题或您无权管理此视频");
 					} else {
 						console.log(data);
+						alert("已删除");
 					}
+					this.$emit("setRouterPointer", "/Home");
 				})
-				alert("已删除");
-				this.$emit("setRouterPointer", "/Admin");
 			},
-			somebodyDeleteItself(){
+			somebodyDeleteItself() {
 				this.refresh();
 			},
 			refresh() {
@@ -66,8 +66,7 @@
 					prefix: "callback",
 					name: "callback_IOlistCommentByVID"
 				}, (err, data) => {
-					if (err) {
-					} else {
+					if (err) {} else {
 						console.log(data);
 						this.CommentCards = data;
 					}

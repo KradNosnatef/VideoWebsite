@@ -74,6 +74,7 @@ public class VideoServiceController {
             @RequestParam(value = "vid") String vid, HttpServletResponse httpServletResponse) {
         if ((!videoService.accessabilityCheck(vid, userService, "write")))
             return (null);
+        if((enabled.compareTo("0")!=0)&&!videoService.accessabilityCheck(vid, userService, "enable"))return(null);
         videoService.SetEnabledByVID(vid, enabled);
         return (IOToolKits.myResponseGenerator(httpServletResponse, true, "_IOchangeEnabled"));
     }
