@@ -22,7 +22,14 @@ public class UserService {
     @Autowired
     AuthoritiesDAO authoritiesDAO;
 
-    public void setUserEntity(UserEntity userEntity) {
+    public String queryUIDByUsername(String username){
+        String uid=userDAO.queryByUsername(username).get(0).get("uid").toString();
+        return(uid);
+    }
+    
+    public String queryUsernameByUID(String uid){
+        String username=userDAO.queryByUID(uid).get(0).get("username").toString();
+        return(username);
     }
 
     public boolean adminCheck(){

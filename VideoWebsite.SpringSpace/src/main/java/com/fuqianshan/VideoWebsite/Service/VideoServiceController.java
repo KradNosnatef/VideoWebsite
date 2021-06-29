@@ -59,9 +59,9 @@ public class VideoServiceController {
         return (IOToolKits.myResponseGenerator(httpServletResponse, response, "_IOlistAllUnabledVideo"));
     }
 
-    @PostMapping("/Xapi/Video/upload")
+    @PostMapping("/Xapi/Video/upload")//上传
     @ResponseBody
-    public String uploadWork(HttpServletRequest request,
+    public String IOupload(HttpServletRequest request,
             @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
 
         request.setCharacterEncoding("UTF-8");
@@ -69,12 +69,22 @@ public class VideoServiceController {
         return (videoService.upload(file));
     }
 
-    @RequestMapping(value = "/Xapi/download", method = RequestMethod.GET) // 下载指定vid对应的视频，如果无访问权限会予以阻止
-    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam(value = "vid") String vid)
-            throws IOException {
-        if(!videoService.accessabilityCheck(vid, userService, "read"))return(null);
+    @RequestMapping(value = "/Xapi/changeEnabled")
+    public @ResponseBody JSONPObject IOchangeEnabled(@RequestParam(value = "enabled") String enabled,
+            @RequestParam(value = "vid") String vid, HttpServletResponse httpServletResponse) {
+        if (!videoService.accessabilityCheck(vid, userService, "enable"))
+            return (null);
+        videoService.SetEnabledByVID(vid, enabled);
+        return (IOToolKits.myResponseGenerator(httpServletResponse, true, "_IOchangeEnabled"));
+    }
 
-        String uid=videoService.queryUidByVid(vid);
+    @RequestMapping(value = "/Xapi/download", method = RequestMethod.GET) // 下载指定vid对应的视频，如果无访问权限会予以阻止
+    public ResponseEntity<InputStreamResource> IOdownloadFile(@RequestParam(value = "vid") String vid)
+            throws IOException {
+        if (!videoService.accessabilityCheck(vid, userService, "read"))
+            return (null);
+
+        String uid = videoService.queryUIDByVID(vid);
         String filePath = "E:/test/" + uid + "/" + vid + ".mp4";
         FileSystemResource file = new FileSystemResource(filePath);
         HttpHeaders headers = new HttpHeaders();
@@ -87,4 +97,5 @@ public class VideoServiceController {
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(new InputStreamResource(file.getInputStream()));
     }
+
 }

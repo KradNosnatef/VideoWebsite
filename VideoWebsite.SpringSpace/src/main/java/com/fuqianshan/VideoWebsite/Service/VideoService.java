@@ -50,6 +50,10 @@ public class VideoService {
         return (list);
     }
 
+    public void SetEnabledByVID(String vid,String enabled){//设置enabled
+        videoRecordsDAO.AlterEnabledByVID(vid, enabled);
+    }
+
     public List<VideoEntity> listAllUnabledVideo() {
         List<VideoEntity> list = new ArrayList<VideoEntity>();
         VideoEntity videoEntity;
@@ -63,24 +67,26 @@ public class VideoService {
     }
 
     public boolean accessabilityCheck(String vid, UserService userService, String mode) {// 校验当前session是否可以访问该vid对应的文件，mode为
-                                                                                         // read 或 write
+                                                                                         // read 、write和enable
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (userService.adminCheck())
             return (true);
-        if (mode.compareTo("write") == 0) {
-            String queryUsername = (String) (videoRecordsDAO.queryByVid(vid).get(0).get("username"));
+        else if (mode.compareTo("write") == 0) {
+            String queryUsername = videoRecordsDAO.queryByVID(vid).get(0).get("username").toString();
             if (queryUsername.compareTo(username) == 0)
                 return (true);
         } else if (mode.compareTo("read") == 0) {
-            String queryEnabled = (String) (videoRecordsDAO.queryByVid(vid).get(0).get("enabled"));
+            String queryEnabled = videoRecordsDAO.queryByVID(vid).get(0).get("enabled").toString();
             if (queryEnabled.compareTo("1") == 0)
                 return (true);
+        } else if(mode.compareTo("enable")==0){
+            return(false);
         }
         return (false);
     }
 
-    public String queryUidByVid(String vid){
-        String uid=(String)(videoRecordsDAO.queryByVid(vid).get(0).get("uid"));
+    public String queryUIDByVID(String vid){
+        String uid=(String)(videoRecordsDAO.queryByVID(vid).get(0).get("uid"));
         return(uid);
     }
 
