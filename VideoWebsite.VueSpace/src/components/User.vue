@@ -1,7 +1,10 @@
 <template>
 	<div class="maindiv">
+		<button v-on:click="gotoVideoUpload()">上传视频</button>
+		<br />
 		<ItemCard v-for="post in itemCards" v-bind:inputTitle="post.filename" v-bind:inputUsername="post.username"
-			v-bind:inputUid="post.uid" v-bind:inputVid="post.vid" v-bind:inputEnabled="post.enabled">
+			v-bind:inputUid="post.uid" v-bind:inputVid="post.vid" v-bind:inputEnabled="post.enabled"
+			 v-on:onItemClicked="getItemClicked">
 		</ItemCard>
 	</div>
 </template>
@@ -36,6 +39,19 @@
 					}
 				}
 			)
+		},
+		methods: {
+			getItemClicked(val) {
+				//console.log("yes you get clicked!");
+				console.log(val);
+				this.$emit("setRouterPointerWithParam", {
+					dest: "/VideoInfo",
+					value: val
+				});
+			},
+			gotoVideoUpload() {
+				this.$emit("setRouterPointer", "/VideoUpload")
+			}
 		}
 	}
 </script>
