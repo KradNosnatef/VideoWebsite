@@ -35,6 +35,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class VideoServiceController {
     @Autowired
     VideoService videoService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping("/Xapi/Video/listAllEnabled") // 获取所有短视频基础属性
     public @ResponseBody JSONPObject IOlistAllEnabled(HttpServletResponse httpServletResponse) {
@@ -67,9 +69,12 @@ public class VideoServiceController {
         return (videoService.upload(file));
     }
 
-    @RequestMapping(value = "/Xapi/media", method = RequestMethod.GET)
-    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam(value = "uid") String uid,
-            @RequestParam(value = "vid") String vid) throws IOException {
+    @RequestMapping(value = "/Xapi/download", method = RequestMethod.GET) // 下载指定vid对应的视频，如果无访问权限会予以阻止
+    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam(value = "vid") String vid)
+            throws IOException {
+        if(!videoService.accessabilityCheck(vid, userService, "read"))return(null);
+
+        String uid=videoService.queryUidByVid(vid);
         String filePath = "E:/test/" + uid + "/" + vid + ".mp4";
         FileSystemResource file = new FileSystemResource(filePath);
         HttpHeaders headers = new HttpHeaders();
