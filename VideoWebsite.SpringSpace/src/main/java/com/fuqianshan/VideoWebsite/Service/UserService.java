@@ -51,7 +51,8 @@ public class UserService {
 
         result = authKeyDAO.queryByValue(authKey);
         if (result.size() == 0){
-            if(authKey!="")return(2);
+            System.out.println("authKey is:"+authKey);
+            if(authKey.compareTo("null")!=0)return(2);
             String userPassword = "{noop}" + password;
             userDAO.userRegister(username, userPassword, 0);
         }

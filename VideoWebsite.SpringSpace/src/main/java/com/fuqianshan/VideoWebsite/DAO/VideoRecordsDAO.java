@@ -72,4 +72,5 @@ public class VideoRecordsDAO {
         String sql="update video_records set video_records.enabled=? where video_records.vid=?";
         jdbcTemplate.update(sql, enabled,vid);
     }
+
 }

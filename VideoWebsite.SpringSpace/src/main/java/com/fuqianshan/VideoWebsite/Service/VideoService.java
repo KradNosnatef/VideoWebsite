@@ -86,7 +86,7 @@ public class VideoService {
     }
 
     public String queryUIDByVID(String vid){
-        String uid=(String)(videoRecordsDAO.queryByVID(vid).get(0).get("uid"));
+        String uid=(videoRecordsDAO.queryByVID(vid).get(0).get("uid")).toString();
         return(uid);
     }
 

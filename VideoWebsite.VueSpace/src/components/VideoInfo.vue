@@ -2,7 +2,7 @@
 	<div>
 		<p>视频标题：{{inputHorizontalProp.title}}</p>
 		<p>发布人：{{inputHorizontalProp.username}}</p>
-		<a :href="'/Xapi/media?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
+		<a :href="'/Xapi/download?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
 		<br />
 		<br />
 		<br />

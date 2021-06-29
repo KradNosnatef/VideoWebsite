@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<p>审核工具页面</p>
-		<a :href="'/Xapi/media?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
+		<a :href="'/Xapi/download?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
 		<br />
 		<button v-on:click="auditPass()">审核通过</button>
 		<button v-on:click="auditDenied()">审核不通过</button>
