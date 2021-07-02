@@ -2,7 +2,7 @@
 	<div>
 		<p>视频标题：{{inputHorizontalProp.title}}</p>
 		<p>发布人：{{inputHorizontalProp.username}}</p>
-		<a :href="'/Xapi/media?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
+		<a :href="'/Xapi/download?uid='+inputHorizontalProp.uid+'&vid='+inputHorizontalProp.vid">视频下载链接</a>
 		<button v-on:click="unableVideo">删除视频（可在个人页面查看）</button>
 		<br />
 		<br />
